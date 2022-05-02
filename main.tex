@@ -561,6 +561,59 @@ It is clear in the proofs that we have seen that the preimage of a vertex $w$ in
   \end{enumerate}
 \end{proof}
 
+\begin{definition}
+  Let $K$ be a complex with basepoint $w$ and suppose $\pi \leq \pi(K,w)$. We define the following relation on paths with origin $w$
+  \begin{equation*}
+    \alpha \equiv_\pi \beta \quad\text{if}\qquad e(\alpha) = e(\beta) \quad\text{and}\quad [\alpha\beta^{-1}] \in \pi.
+  \end{equation*}
+\end{definition}
+
+To see that $\equiv_{\pi}$ is an equivalence relation, we check the following. Let $\alpha,\beta,\gamma$ be paths originating at $w$;
+\begin{enumerate}
+\item Trivially, $e(\alpha) = e(\alpha)$ and $[\alpha \alpha^{-1}] = [(w,w)]$ which belongs to every subgroup of $\pi(K,w)$.
+\item If $\alpha \equiv_{\pi} \beta$, then $e(\beta) = e(\alpha)$ and $[\alpha \beta^{-1}] = [(\beta \alpha^{-1})^{-1}] \in \pi$. It follows by the definition of the subgroup that $[\beta \alpha^{-1}] \in \pi$ and hence $\beta \equiv_{\pi} \alpha$.
+\item Lastly suppose $\alpha \equiv_{\pi} \beta$ and $\beta \equiv_{\pi} \gamma$. Then $\alpha,\beta,\gamma$ must all have the same endpoint with $[\alpha\beta^{-1}],[\beta\gamma^{-1}] \in \pi$ and so $[\alpha\beta^{-1}][\beta\gamma^{-1}] = [\alpha\gamma^{-1}]$ also belongs to $\pi$. It follows that $\alpha \equiv_{\pi} \gamma$ as required.
+\end{enumerate}
+
+Let \emph{$\mathcal{C}\alpha$} denote the equivalence class under $\equiv_{\pi}$ that the path $\alpha$ belongs to and suppose that $K_{\pi}$ is the set of all such equivalence classes for a subgroup $\pi \leq \pi(K,w)$. We find that we can consider $K_{\pi}$ as a complex in the following way.
+
+Let $s$ be a simplex in $K$ and suppose $\alpha$ is a path in $K$ with origin at the basepoint $w$ and has its endpoint as a vertex in simplex $s$. We say that a \emph{continuation} of $\alpha$ in $s$ is a path $\beta = \alpha\alpha'$, for a path $\alpha'$ that lies completely in $s$. Now, we say that the simplices of $K_{\pi}$ are sets of the form
+\begin{equation*}
+  [s,\mathcal{C}\alpha] := \{\mathcal{C}\beta \mid \beta \text{ is a continuation of } \alpha \text{ in } s \},
+\end{equation*}
+For a simplex $s$ of $K$ and any path $\alpha$ originating from $w$ in $K$. In particular the equivalence classes in $[s,\mathcal{C}\alpha]$ are exactly those that contain elements that are equivalent by $\equiv_{\pi}$ to $\alpha\alpha'$ for a path $\alpha'$ in $s$. To see that $K_{\pi}$ with these simplices defined indeed has the structure of a complex, we have the following Lemma whose proof we omit.
+
+\begin{lemma}
+  Let $K$ be a connected complex and $w$ be some basepoint in it. Suppose $\pi$ is a subgroup of the fundamental group $\pi(K,w)$ and $K_{\pi}$ is defined as above. Then $K_{\pi}$ is a complex and the function $p:K_{\pi} \rightarrow K$ given by $\mathcal{C}\alpha \mapsto e(\alpha)$ is a simplical map.
+\end{lemma}
+
+Though we haven't shown yet that $K_{\pi}$ is a covering complex for $K$, we can abuse the definition a bit to talk about the liftings of path $\alpha$ in $K$ to $K_{\pi}$ i.e.\ a path $A$ in $K_{\pi}$ where $pA = \alpha$.
+
+\begin{theorem}
+  Let $K,w,\pi,K_{\pi}$ be as in the previous Lemma and suppose $\tilde{w} = \mathcal{C}(w,w) \in K_{\pi}$. Then, every path $\alpha$ in $K$ that has origin $w$ can be lifted to a path $A$ in $K_{\pi}$ from $\tilde{w}$ to $\mathcal{C}\alpha$.
+\end{theorem}
+
+\begin{proof}
+  Suppose that $\alpha = (w,v_1)(v_1,v_2) \dots (v_{n-1},v_n)$ and define for all $i = 1, 2, \dots n$ the ``partial'' paths $\alpha_i$ given by $(w,v_1)(v_1,v_2) \dots (v_{i-1},v_i)$. If $s_i$ is the simplex $\{v_i,v_{i+1}\}$, then $\mathcal{C}\alpha_i$ and $\mathcal{C}\alpha_{i+1}$ must lie in the simplex $[s_i,\mathcal{C}\alpha_i]$ and hence $(\mathcal{C}\alpha_i,\mathcal{C}\alpha_{i+1})$ is an edge in $K_{\pi}$. It follows that
+  \begin{equation*}
+    A = (\tilde{w},\mathcal{C}\alpha_{1})(\mathcal{C}\alpha_1,\mathcal{C}\alpha_2) \dots (\mathcal{C}\alpha_{n-1},\mathcal{C}\alpha_n)
+  \end{equation*}
+  is the desired lifting.
+\end{proof}
+
+\begin{corollary}
+  If $K$ is a connected complex and $K_\pi$ is as before, then $K_\pi$ is connected as well.
+\end{corollary}
+\begin{proof}
+  The previous theorem gives us that there $\tilde{w}$ can be connected to every element of $K_{\pi}$ by a path.
+\end{proof}
+
+\begin{theorem}
+  If $K$ is a connected complex, $w$ is a basepoint in $K$ and if $\pi$ is a subgroup of $\pi(K,w)$, then $p:K_{\pi}\rightarrow K$ is a covering complex with $p_{\#}\pi(\tilde{K},\tilde{w}) = \pi$.
+\end{theorem}
+\begin{proof}
+  ok
+\end{proof}
 
 \section{The Nielsen Schreier Theorem}
 \begin{theorem}[Nielsen-Schreier]\label{thm:ns}
