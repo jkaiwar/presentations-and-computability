@@ -475,6 +475,7 @@ What this theorem shows is that for the index $I$ of a path $\alpha$ in $K$ that
 \end{proof}
 
 \begin{theorem}
+  \label{thm:conj}
   Let $p: \tilde{K} \rightarrow K$ be a covering complex and suppose $\tilde{w}$ is a basepoint in $\tilde{K}$ with $p(\tilde{w}) := w \in K$. If another vertex $\tilde{u}$ in $\tilde{K}$ has $p(\tilde{u}) = w$, then $p_{\#}\pi(\tilde{K},\tilde{w})$ and $p_{\#}\pi(\tilde{K},\tilde{u})$ are conjugate subgroups of $\pi(K,w)$. Conversely If $H \leq \pi(K,w)$ is conjugate to $p_{\#}\pi(\tilde{K},\tilde{w})$, then there exists a vertex $\tilde{u} \in \tilde{K}$ with $p(\tilde{u}) = w$ such that $H = p_{\#}\pi(\tilde{K},\tilde{u})$.
 \end{theorem}
 
@@ -533,7 +534,32 @@ It is clear in the proofs that we have seen that the preimage of a vertex $w$ in
   Lastly, we check that the stabiliser of the action at a point $\tilde{x} \in p^{-1}(w)$ is indeed $p_{\#}\pi(\tilde{K},\tilde{x})$. $[\alpha]$ belongs to the stabiliser of $\tilde{x}$ if and only if it lifts to closed paths at $\tilde{x}$ which happens if and only if $[\alpha] \in p_{\#}\pi(\tilde{K},\tilde{x})$.
 \end{proof}
 
-ok
+\begin{corollary}
+  Let $p: \tilde{K} \rightarrow K$ be a covering complex. Then we have the following.
+  \begin{enumerate}
+  \item If $w$ is a basepoint in $K$ and $\tilde{w} \in p^{-1}(w)$, then
+    \begin{equation*}
+      [\pi(K,w) : p_{\#}\pi(\tilde{K},\tilde{w})] = |p^{-1}(w)|.
+    \end{equation*}
+  \item If $w,u$ are basepoints in $K$, then
+    \begin{equation*}
+      |p^{-1}(w)| = |p^{-1}(u)|.
+    \end{equation*}
+  \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+  \begin{enumerate}
+  \item The cardinality of a set with a transitive action defined on it is the index of the stabiliser at a point.
+  \item If $w$ and $u$ are basepoints in $K$, there is are isomorphisms $\phi,\psi$ on $\pi(K,w)\rightarrow\pi(K,u)$ and $\pi(\tilde{K},\tilde{w})\rightarrow\pi(\tilde{K},\tilde{w})$ respectively. We will not show this here but it follows a similar line of reasoning to that seen in the proof of Theorem \ref{thm:conj}. It can be shown then that the following diagram commutes and the result follows.
+    \begin{equation*}
+      \begin{tikzcd}[ampersand replacement=\&, sep=huge]
+        \pi(\tilde{K},\tilde{w})\arrow[r,"\phi"]\arrow[d,"p_{\#}"]\& \pi(\tilde{K},\tilde{u}) \arrow[d,"p_{\#}"] \\
+        \pi(K,w) \arrow[r,"\psi"] \& \pi(K,u)
+      \end{tikzcd}
+    \end{equation*}
+  \end{enumerate}
+\end{proof}
 
 
 \section{The Nielsen Schreier Theorem}
