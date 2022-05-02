@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{tikz-cd}
 \usepackage{amsfonts}
+\usepackage{calrsfs}
 
 \newtheorem{definition}{Definition}
 \newtheorem{theorem}{Theorem}
@@ -386,6 +387,7 @@ Since $\lambda_v$ is a path in $T$, it follows that each of its edges lie in $T$
 When we limit our discussion to complexes of dimension $1$, we have the following corollary.
 
 \begin{corollary}
+  \label{cor:1free}
   If $K$ is a connectd $1$-complex, then $\pi(K,w)$ is a free group for some $w \in \operatorname{Vert}(K)$ with
   \begin{equation*}
     \operatorname{rank} \pi(K,w) = |\{1 \text{-simplexes in } K \text{ not in } T \}|.
@@ -400,6 +402,7 @@ When we limit our discussion to complexes of dimension $1$, we have the followin
 
 
 \begin{example}
+  \label{exmp:bouq-fund}
   If $B_I$ is the bouquet of $|I|$ circles as in Example \ref{exmp:bouq}, then $\pi(B_I,w) \cong F_{|I|}$. We define $T = \{ \{w,u_i \} | i \in I \} \cup \{ \{w,v_i \} | i \in I \}$ and notice that this is a maximal tree. The remaining simplices are $\{v_i,u_i\}$, of which there are exactly $|I|$ of. The corollary above then gives us that $\pi(B_I,w)$ is free with rank $|I|$ as required.
 \end{example}
 
@@ -467,6 +470,7 @@ What this theorem shows is that for the index $I$ of a path $\alpha$ in $K$ that
 \end{proof}
 
 \begin{theorem}
+  \label{thm:injection}
   Let $p:\tilde{K} \rightarrow K$ be a covering of a complex $K$ and $\tilde{w} \in \operatorname{Vert}(\tilde{K})$ such that for some vertex $w$ of $K$, $p(\tilde{w}) = w$. Then considering $\tilde{w}$ a basepoint of $\tilde{K}$ and $w$ of $K$, we have that the induced homomorphism $p_{\#} : \pi(\tilde{K},\tilde{w}) \rightarrow \pi(K,w)$ is injective.
 \end{theorem}
 
@@ -584,14 +588,16 @@ Let $s$ be a simplex in $K$ and suppose $\alpha$ is a path in $K$ with origin at
 For a simplex $s$ of $K$ and any path $\alpha$ originating from $w$ in $K$. In particular the equivalence classes in $[s,\mathcal{C}\alpha]$ are exactly those that contain elements that are equivalent by $\equiv_{\pi}$ to $\alpha\alpha'$ for a path $\alpha'$ in $s$. To see that $K_{\pi}$ with these simplices defined indeed has the structure of a complex, we have the following Lemma whose proof we omit.
 
 \begin{lemma}
+  \label{lem:pip}
   Let $K$ be a connected complex and $w$ be some basepoint in it. Suppose $\pi$ is a subgroup of the fundamental group $\pi(K,w)$ and $K_{\pi}$ is defined as above. Then $K_{\pi}$ is a complex and the function $p:K_{\pi} \rightarrow K$ given by $\mathcal{C}\alpha \mapsto e(\alpha)$ is a simplical map.
 \end{lemma}
 
 Though we haven't shown yet that $K_{\pi}$ is a covering complex for $K$, we can abuse the definition a bit to talk about the liftings of path $\alpha$ in $K$ to $K_{\pi}$ i.e.\ a path $A$ in $K_{\pi}$ where $pA = \alpha$.
 
-\begin{theorem}
+\begin{lemma}
+  \label{lem:pilift}
   Let $K,w,\pi,K_{\pi}$ be as in the previous Lemma and suppose $\tilde{w} = \mathcal{C}(w,w) \in K_{\pi}$. Then, every path $\alpha$ in $K$ that has origin $w$ can be lifted to a path $A$ in $K_{\pi}$ from $\tilde{w}$ to $\mathcal{C}\alpha$.
-\end{theorem}
+\end{lemma}
 
 \begin{proof}
   Suppose that $\alpha = (w,v_1)(v_1,v_2) \dots (v_{n-1},v_n)$ and define for all $i = 1, 2, \dots n$ the ``partial'' paths $\alpha_i$ given by $(w,v_1)(v_1,v_2) \dots (v_{i-1},v_i)$. If $s_i$ is the simplex $\{v_i,v_{i+1}\}$, then $\mathcal{C}\alpha_i$ and $\mathcal{C}\alpha_{i+1}$ must lie in the simplex $[s_i,\mathcal{C}\alpha_i]$ and hence $(\mathcal{C}\alpha_i,\mathcal{C}\alpha_{i+1})$ is an edge in $K_{\pi}$. It follows that
@@ -609,16 +615,43 @@ Though we haven't shown yet that $K_{\pi}$ is a covering complex for $K$, we can
 \end{proof}
 
 \begin{theorem}
+  \label{thm:covering-fundamental}
   If $K$ is a connected complex, $w$ is a basepoint in $K$ and if $\pi$ is a subgroup of $\pi(K,w)$, then $p:K_{\pi}\rightarrow K$ is a covering complex with $p_{\#}\pi(\tilde{K},\tilde{w}) = \pi$.
 \end{theorem}
 \begin{proof}
-  ok
+  First we will see that $p:K_{\pi}\rightarrow K$ is a covering complex. For any simplex $s$ in $K$ we have
+  \begin{equation}
+    \label{eqn:picover}
+    p^{-1}(|s|) = \bigcup_{\mathcal{C}\alpha \in K_{\pi}}|[s,\mathcal{C}\alpha]|.
+  \end{equation}
+  To see this, we have for some $\mathcal{C}\alpha$ in $K_{\pi}$ that paths in $[s,\mathcal{C}\alpha]$ all have their endpoints in $s$ and furthermore by definition there is a path in $[s,\mathcal{C}\alpha]$ that ends at an arbitrary vertex in $s$. Thus $p([s,\mathcal{C}\alpha]) = s$ and this argument can be repeated for all subsets of $s$. Thus $|[s,\mathcal{C}\alpha]| \subseteq p^{-1}(|s|)$. On the other hand if $r$ is a simplex in $K$ that has a vertex not in $s$, the set $p([r,\mathcal{C}\alpha])$ contains the vertex not in $s$ and $[r,\mathcal{C}\alpha] \not\subseteq p^{-1}(|s|)$. Thus the equality \ref{eqn:picover} holds.
+
+  Next we will show that the sets in the union of equation \ref{eqn:picover} are pairwise disjoint. To see this, let $[s,\mathcal{C}\alpha]$ and $[s,\mathcal{C}\beta]$ be elements of $K_{\pi}$. Suppose that $\mathcal{C}\gamma \in [s,\mathcal{C}\alpha] \cap [s,\mathcal{C}\beta]$ i.e.\ that the intersection is nonempty. We have then that $\gamma \equiv_{\pi} \alpha\alpha'$ and $\gamma \equiv_{\pi} \beta\beta'$ where $\alpha'$ and $\beta'$ lie completely in $s$ which implies that $e(\alpha') = e(\beta')$. We have then that $\alpha\alpha'\beta'^{-1}\beta^{-1}$ is a closed path at $w$ and further since $\alpha'$ and $\beta'$ lie inside the simplex $s$, we have that
+  \begin{equation*}
+    \alpha\alpha'\beta'^{-1}\beta^{-1} \simeq \alpha\beta^{-1}.
+  \end{equation*}
+  It follows that $[\alpha\alpha'\beta'^{-1}\beta^{-1}] = [\alpha\beta^{-1}]$. On the other hand however,
+  \begin{equation*}
+    [\alpha\alpha'\beta'^{-1}\beta^{-1}] = [\gamma\gamma^{-1}] = 1_{\pi(K,w)} \in \pi.
+  \end{equation*}
+  From this we have that $\alpha \equiv_\pi \beta$ and so $\mathcal{C}\alpha = \mathcal{C}\beta$. Thus the sets in the union of equation \ref{eqn:picover} are indeed disjoint.
+
+  To show that $p:K_{\pi}\rightarrow K$ is a covering complex, it remains to show that the restriction of $p$ to $|[s,\mathcal{C}\alpha]|$, which we'll denote $p'$, is an isomorphism for which we just need to show that it is a bijection. For injectivity, let $\mathcal{C}\beta$ and $\mathcal{C}\gamma$ be elements of the simplex in $[s,\mathcal{C}\alpha]$. If we assume that $p(\mathcal{C}\beta) = p(\mathcal{C}\gamma)$, we have that $e(\beta) = e(\gamma)$. By the previous argument showing disjointedness, we must have $\beta \equiv_\pi \gamma$ from this and thus $\mathcal{C}\beta = \mathcal{C}\gamma$.
+
+  For surjectivity suppose that $v$ is an arbitrary vertex in $s$. If $\alpha'$ is a path from $e(\alpha)$ to $v$, then $\beta := \alpha\alpha'$ is a continuation of $\alpha$ in $s$. But $p(\mathcal{C}\beta) = e(\beta) = v$ and we are done.
+
+  Lastly we wish to show that $p_{\#}\pi(\tilde{K},\tilde{w}) = \pi$. Now that we have shown that $p:K_{\pi}\rightarrow K$ is a covering complex, we know that for each path $\alpha$ in $K$, there is a unique lifting $\tilde{\alpha}$ based at $\tilde{w}$ in $K_{\pi}$. In fact we have constructed this lift in Lemma \ref{lem:pilift} and this has endpoint $\mathcal{C}\alpha$. Thus we have that $[\alpha] \in p_{\#}\pi(\tilde{K},\tilde{w})$ if and only if $[\alpha] = [pA]$ for $A \in \pi(K_\pi,\tilde{w})$. But this occurs if and only if $o(A) = \tilde{w}$, equivalently: $\mathcal{C}\alpha = \tilde{w}$ which is equivalent to $[\alpha(w,w)^{-1}] \in \pi$. This is then equivalent to $[\alpha] \in \pi$ as required.
 \end{proof}
+
+In Theorem \ref{thm:injection} we established that each covering complex $p:\tilde{K} \rightarrow K$ can be associated with a subgroup of $\pi(K,w)$ for a basepoint $w$. Here we have shown effectively shown the converse i.e.\ that each subgroup $\pi \leq \pi(K,w)$ can be used to construct a cover that is associated with it. We have then that subgroups of the fundamental group of a complex correspond with covering complexes of it. This is enough background to prove the Nielsen Schreier theorem.
 
 \section{The Nielsen Schreier Theorem}
 \begin{theorem}[Nielsen-Schreier]\label{thm:ns}
   Every subgroup $H$ of a free group $F$ is itself free.
 \end{theorem}
+\begin{proof}
+  If $F$ has rank $|I|$ and $K$ is a bouquet of $I$ circles with basepoint $w$, then $\pi(K,w) \cong F$ as seen in Example \ref{exmp:bouq-fund}. We have from Theorem \ref{thm:covering-fundamental} that there exists a covering complex $p:K_H \rightarrow K$ that has $p_{\#}\pi(K_H,\tilde{w}) = H$. Since Theorem \ref{thm:injection} gives us that $\pi_{\#}$ is injective and so $p_{\#}\pi(K_H,\tilde{w}) \cong H$. However since $K_H$ must have the same dimension as $K$, we have that $\pi(K_H,\tilde{w})$ is free by Corollary \ref{cor:1free}.
+\end{proof}
 \section{Semigroups}
 \section{Turing Machines and Decision Processes}
 \section{The Markov-Post Theorem}
