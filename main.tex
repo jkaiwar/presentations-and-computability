@@ -655,6 +655,7 @@ In Theorem \ref{thm:injection} we established that each covering complex $p:\til
 \end{proof}
 
 \section{The Word Problem}
+\label{sec:wp}
 We now turn our attention to the second important result to do with free groups and presentations. In this section our goal is to investigate to what extent computers can understand group presentations. In particular we will ask whether or not a ``turing machine'', which we shall define, can check whether a group given by its presentation is in fact trivial. To give some more intuition to what we plan to show, we will begin by talking about decision processes.
 
 If $\mathcal{L}$ is a collection of ``questions'', we say that a \emph{decision process} or \emph{algorithm} is a determinstic process, or set of directions that are applied to questions
@@ -688,6 +689,73 @@ questions in $\mathcal{L}$ can be answered by simply reducing the word and check
 To solve the word problem in greater generality or even to investigate  whether the problem is solvable, we will need to develop a more formal understanding of the concepts that we have described in this section.
 
 \section{Turing Machines and Decision Processes}
+
+The primary object that we wish to study is the \emph{Turing Machine}, which abstracts the notion of decision processes in a manner that we can think about mathematically. We imagine the Turing machine as a box with a tape that running through it. The tape is divided into cells that run along it, with each cell containing one of the finitely many symbols $s_0,s_1,\dots,s_M$. For the sake of generality we assume that the tape is of infinite length i.e.\ contains infinitely many cells with symbols on them. The box, we assume, is at any point in time ``scanning'' a particular cell on the tape and has a ``state'', one of $q_0,q_1,\dots q_N$. From this moment the machine can complete one of the following ``instruction'', depending on the current symbol being scanned and current state.
+\begin{enumerate}
+\item Replace the symbol $s_j$ by the symbol $s_k$ and continue scanning the same cell. Go into state $q_l$.
+\item Move the tape to scan the cell to the right. Go into state $q_l$.
+\item Move the tape to scan the cell to the left. Go into state $q_l$.
+\end{enumerate}
+We start by setting the machine to a ``starting state'' $q_1$ and set it to  scan a particular cell on tape we give to it which has any symbol printed on it. Now, we allow the machine to run which we understand to mean: execute the next instruction. Keep in mind since the state the machine is in and symbol it is scanning determine the unique next instruction, there is no ambiguity at each instruction as to what the next instruction is. We understand the machine to ``stop'' if it enters state $q_0$ after completing finitely many instructions, though it is not guaranteed that the machine must indeed stop. Now with this intuition, the formal definitions that follow should appear natural.
+
+\begin{definition}
+  We say that a \emph{quadruple} is a $4$-tuple of symbols that can be written in one of the following ways.
+  \begin{align*}
+    & q_is_js_kq_1, \\
+    & q_is_jRq_l, \\
+    & q_is_jLq_l.
+  \end{align*}
+  A \emph{Turing machine}, $T$ is a finite set of of quadruples where no two quadruples have the same first two symbols. The set of all middle two symobls in elements of $T$ ($s$-letters) form the \emph{alphabet} $\{s_0, \dots, s_1\}$ of the Turing machine. If the alphabet of a Turing machine can be written as the disjoint union $S \cup T$, then we say an \emph{s-word} on $S$ is a positive word on $S$.
+\end{definition}
+
+> blank letters
+
+We can see that this definition is a more concrete form of the description of Turing machines that we have given above. The \emph{alphabet} form the finitely many symbols that are printed on the tape and the quadruples tell us without ambiguity which of the ``instructions'' from above that we must perform. The quadruple of the first type can be understood to mean: ``If we are in state $q_i$ whilst scanning a cell with symbol $s_j$, then print the symbol $s_k$ on that cell and change the machine's state to $q_l$''. The second and third types would mean: ``If we are in state $q_i$ and scanning a cell with symbol $s_j$, then move either left/right and enter state $q_l$''.
+
+In our definition of the Turing Machine, all we define is: what symbols may exist on the tape, what states may the machine enter and what instructions can be performed. It describes what the ``box'', in the informal exposition above, can do. To study how a Turing machine $T$ runs, we need a way of talking about how it is started, i.e.\ in a particular state $q_i$ and scanning a particular cell of a provided tape, but this information is what is all that we can see in our notional box and tape at any point during the running of the machine. For this we have the instantaneous description, defined below, which tells us what symbols are present on the cells of the tape, which cell is being scanned and what state the machine is in.
+
+\begin{definition}
+  An \emph{instantaneous description} is the positive word $\alpha$ of the form $\sigma q_i \tau$, where $\sigma$ and $\tau$ are s-words and $\tau$ is nonempty.
+\end{definition}
+
+What we understand from this is that the tape is composed of cells whose symbols from left to right form the word $\sigma\tau$. The machine is in state $q_i$ and scanning the cell represented by the first letter of $\tau$.
+
+\begin{definition}
+  Let $T$ be a Turing machine. We say that a \emph{basic move} is an ordered pair of instantaneous descriptions $(\alpha,\beta)$, that we denote by
+  \begin{equation*}
+    \alpha \mapsto \beta,
+  \end{equation*}
+  and for which ther must exist s-words $\sigma$ and $\sigma'$ that may be empty, such that one of the following conditions hold:
+  \begin{enumerate}
+  \item $\alpha = \sigma q_i s_j\sigma'$, $\beta = \sigma q_l s_k \sigma'$ and we must have the quadruple $q_is_js_kq_l$ in $T$.
+  \item $\alpha = \sigma q_i s_j s_k \sigma'$, $\beta = \sigma s_j q_l s_k \sigma'$ and we must have the quadruple $q_is_jRq_l$ in $T$.
+  \item $\alpha = \sigma q_i s_j$, $\beta = \sigma s_j q_l s_0$ and we must have the quadruple $q_is_jRq_l$ in $T$.
+  \item $\alpha = \sigma s_k q_i s_j \sigma'$, $\beta = \sigma q_l s_k s_j \sigma'$ and we must have the quadruple $q_is_jLq_l$ in $T$.
+  \item $\alpha = q_i s_j \sigma'$, $\beta =  q_l s_0 s_j \sigma'$ and we must have the quadruple $q_is_jLq_l$ in $T$.
+  \end{enumerate}
+\end{definition}
+
+Basic moves are those pairs of instantaneous descriptions by which it is possible to go from the first to the second by the Turing machine performing one of its instructions. The requirement in the definition of Turing machines that no two quadruples are to have the same first two letters give us that there is no ambiguity in what instruction to follow i.e.\ for an instantaneous description $\alpha$, there is a unique instantaneous description $\beta$ such that $\alpha \mapsto \beta$. The reason we have five conditions in the above definition despite having only three types of instructions is that we need two extra conditions for what occurs when we reach the ``end'' of the tape on the left and right side. As implied by the definition, we simply pretend that all the cells beyond the description contain the blank symbol $s_0$.
+
+\begin{definition}
+For a Turing machine $T$, an instantaneous description $\alpha$ is \emph{terminal} if there is no instantaneous description $\beta$ such that $\alpha \mapsto \beta$, i.e.\ that $(\alpha,\beta)$ is a basic move. We say that $T$ \emph{computes} $\omega$, a positive word on the alphabet of $T$ if for instantaneous description $\alpha_1 = q_1\omega$, there exists a finite number of instantaneous descriptions $\alpha_2,\dots \alpha_t$ where for all $i$ positive, $\alpha_i \mapsto \alpha_{i+1}$ and $\alpha_t$ is terminal.
+\end{definition}
+
+Informally, \emph{computing} the word $\omega$ entails printing the characters o $\omega$ on the cells of the tape from left to right, setting the Turing machine into state $q_1$ and haveing it scan the first character of the tape and having it run till it stops, which occurs when there are no more possible moves to perform. The Turing machine may however run forever, in which case we don't say that it computes the word $\omega$.
+
+\begin{definition}
+  If $\Omega$ is the set of all positive words on the set of symbols $S = \{s_1, s_2 \dots, s_M\}$, we define for any Turing machine $T$, the subset $e(T)$ of $\Omega$ by
+  \begin{equation*}
+    e(T) = \{\omega \in \Omega \mid T \text{ computes } \omega\}.
+  \end{equation*}
+  We say that $e(T)$ is the set \emph{enumerated by $T$}. We say that a subset $E \subseteq \Omega$ is \emph{recursively enumerable} if there exists a Turing machine $T$ that enumerates $E$; that is, such that  $e(T) = E$.
+\end{definition}
+
+For every Turing machine $T$, with alphabet $S$, there must be some words of $S$ that are computed by $T$ and some that aren't and so the subset $e(T) \subseteq \Omega$ is well defined. Actually finding which words are in it though, with our current background, can only be done by running the Turing machine $T$ with the word in question on the tape. But checking whether or not the word is computed entails by definition waiting forever! What we now want to investigate is which subsets $E$ of $\Omega$ do we have to wait infinitely long for to check whether a positive word in $E$ lies in $e(T)$. If $E$ and $\Omega - E$ are recursively enumerable, then there exist Turing machine $T$ and $T'$ such that $E = e(T)$ and $(\Omega - E) = e(T')$. Thus setting up $T$ and $T'$ to simultaneously compute any word $\omega \in \Omega$, one of the machines will terminate in finite time, indicating to us whether or not $\omega$ lies in $E$. We define this condition as follows.
+
+\begin{definition}
+  Let $\Omega$ be the set of all positive words on $S = \{s_0,s_1, \dots, s_M \}$. We say that a subset $E \subseteq \Omega$ is \emph{recursive} if both $E$ and its complement $\Omega - E$ are recursively enumerable.
+\end{definition}
 \section{The Markov-Post Theorem}
 \section{The Novikov-Boone-Britton Theorem}
 \nocite{rotman1999introduction}
