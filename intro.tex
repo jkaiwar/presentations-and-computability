@@ -1,0 +1,128 @@
+In this project we will explore two important theorems loosely connected to the presentation of groups.
+
+\section{Free Groups}
+\label{sec:sc:fg}
+
+We have often seen groups defined as a collection of \emph{generators} and \emph{relations}, most notably cyclical groups which can be written in the form $(a \mid a^n)$ for some $n \in \mathbb{N}$, which denotes the cyclical group of order $n$. The first part of the expression is the \emph{generator} consisting of the ``symbol'' $a$ and the second part is understood to be the ``relation'' in this case the single relation $a^n$. The expression as a whole indicates a group where every element can be written as a ``product'' of symbols and the inverses of these symbols where $aa^{-1} = a^{-1}a = 1$. In addition we understand the relation $a^n$ reduces to the identity of the group in a product of generators and its inverses. Thus a generator along with a single relation is enough to define a cyclic group up to isomorphism.
+
+This principle can be extended to suppose a collection symbols make up the generators that can be combined under group operations with their inverses. The relations here would be ``words'' of generators which are understood to reduce to the identity in the group operations. In fact we can show that \emph{any} group can be written as a collection of generators and relations a depiction called a group's \emph{presentation}, though this collection of generators and relations may not be finite. In order to show this, we must first develop some formalism by defining the \emph{Free Group}.
+
+\begin{definition}
+  If $X$ is a subset of a group $F$, then $F$ is a \emph{free group} with \emph{basis} $X$ if for any group $G$ and every function $f:X \rightarrow G$. There exists a unique homomorphism $\phi:F \rightarrow G$ that extends $f$ i.e.\ the following diagram commutes.
+  \begin{equation}
+    \begin{tikzcd}[ampersand replacement=\&, sep=huge]
+      F \arrow[dr,dashrightarrow,"\phi"] \\
+      X \arrow[u,hook] \arrow[r,"f"] \& G.
+    \end{tikzcd}
+  \end{equation}
+\end{definition}
+
+What isn't clear by the definition here is the existence of such a set for any generating set $X$. To show this we will introduce a more formal notion of ``words'' and consider elements of the free group as words on the generating set. If $X$ is a set we let $X^{-1}$ be a set such that there is a bijection $X \rightarrow X^{-1}$ where the image of $x$ is denoted $x^{-1}$. Also we allow the notation $x^1 = x$ and $x^0 = 1$.
+\begin{definition}
+  A \emph{word} $w$ on a set $X$ is a sequence $w = (a_1, a_2, \dots)$, where $a_i \in X \cup X^{-1} \cup \{ 1 \}$ for all $i$. We require that after some $n \in \mathbb{N}$ each $i \geq n$ has $a_i = 1$. The \emph{empty word} is defined to be $(1, 1, \dots)$.
+\end{definition}
+If a word is nonempty we can concisely denote it by a string of elements to the power of $1$, $-1$ or $0$; i.e.\ in the form $x_1^{\epsilon_1} x_2^{\epsilon_2} \dots x_n^{\epsilon_n}$ where $x_1, x_2, \dots x_n \in X$ and $\epsilon_1, \epsilon_2, \dots \epsilon_{n-1} \in \{-1, 0, 1\}$ while $\epsilon_n \in \{-1, 1\}$. To get to this notation, we delete all the $1$'s that appear in the sequence notation of the word. Since after finitely many elements all the following elements are $1$'s, the resultant finite sequence can then be written in the form we have described.
+\begin{definition}
+  Given a word $w$, let $x_1^{\epsilon_1} x_2^{\epsilon_2} \dots x_n^{\epsilon_n}$ denote if it were nonempty. We say that
+  \begin{itemize}
+  \item $w^{-1}$ is the \emph{inverse} of $w$ if $w^{-1} = x_n^{-\epsilon_n} \dots x_1^{-\epsilon_1}$
+  \item $w$ is \emph{reduced} if it is either empty or no $x$ and $x^{-1}$ appear adjacently in the concise notation.
+  \item A \emph{subword} of $w$ is either the empty word or of the form $x_i^{\epsilon_i} \dots x_j^{\epsilon_j}$ where $1 \leq i \leq j \leq n$.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}
+  Given two reduced words on a generating set $X$, $w = x_1^{\epsilon_1} x_2^{\epsilon_2} \dots x_n^{\epsilon_n}$ and $u = y_1^{\delta_1} y_2^{\delta_2} \dots y_m^{\delta_m}$, we define the \emph{product} or \emph{juxtaposition} $wu$ as the concatenation of $w$ and $u$ followed by the repeated cancellation of letters $x$ $x^{-1}$ if they appear adjacently to produce a reduced word.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:exist}
+  Given a set $X$, there exists a free group $F$ with basis $X$.
+\end{theorem}
+
+\begin{proof}
+  Suppose that $F$ is the set of all reduced words on $X$. We will show that $F$ is a group under juxtaposition and further that it is a free group for the inclusion $i:X \xhookrightarrow{} F$ given by $x \mapsto (x,1,1,\dots)$. We will show this by considering $F$ and $X$ in an more helpful way.
+  
+  Define for each $x \in X$ and $\epsilon \in \{-1,0,1 \}$ the function $|x^{\epsilon}|:F \rightarrow F$ given by
+  \[
+    |x^{\epsilon}|(x_1^{\epsilon_1}x_2^{\epsilon_2} \dots x_n^{\epsilon_n}) =
+    \begin{cases}
+      x^{\epsilon}x_1^{\epsilon_1}x_2^{\epsilon_2} \dots x_n^{\epsilon_n} & \text{if } x^{\epsilon} \neq x_1^{\epsilon_1}, \\
+      x_2^{\epsilon_1}x_3^{\epsilon_2} \dots x_n^{\epsilon_n} & \text{if } x^{\epsilon} = x_1^{\epsilon_1}.
+    \end{cases}
+  \]
+  Since both $|x^{\epsilon}| \circ |x^{-\epsilon}|$ and $|x^{-\epsilon}| \circ |x^{\epsilon}|$ is the identity map on $F$, we have that each $|x^{\epsilon}|$ is invertible and hence a member of the symmetric group on $F$. In this group, we let the subset $\{|x| \mid x \in X \}$ generate the subgroup $\mathcal{F}$. Notice that $g \in \mathcal{F}$ has a unique factorisation of the form
+  \begin{equation*}
+    g = |x_1^{\epsilon_1}| \circ |x_2^{\epsilon_2}| \circ \dots \circ |x_n^{\epsilon_n}|,
+  \end{equation*}
+  for $\epsilon_i \in \{-1,1 \}$ where $|x^{\epsilon}|$ is never adjacent to $|x^{-\epsilon}|$. To see that this factorisation is unique, consider $g(1) = x_1^{\epsilon_1} x_2^{\epsilon_2} \dots x_n^{\epsilon_n}$. This must be a reduced word, i.e.\ a sequence $(x_i)_{i \in \mathbb{N}}$ and if $(y_i)_{i \in \mathbb{N}} = (x_i)_{i \in \mathbb{N}}$ we must have $y_i = x_i$ for all $i$. As each element $g$ corresponds with a reduced word on $X$, we have a bijection $\tilde{\zeta}: \mathcal{F} \rightarrow F$. Furthermore, we note that if $g,h \in \mathcal{F}$, we have that
+  \[
+    \tilde{\zeta}(g \circ h) = \tilde{\zeta}(g)\tilde{\zeta}(h)
+  \]
+  since the factors of $g \circ h$ that cancel out are exactly the factors on the left hand side that cancel out during juxtaposition. It follows that $F$ is a group under juxtaposition that is isomorphic to $\mathcal{F}$ via $\tilde{\zeta}$.
+
+  To see that $F$ is free with basis $X$, consider an arbitrary group $G$ and a function $f:X \rightarrow G$. Define $\phi: F \rightarrow G$ by
+  \[
+    x_1^{\epsilon_1}x_2^{\epsilon_2} \dots x_n^{\epsilon_n} \mapsto f(x_1^{\epsilon_1})f(x_2^{\epsilon_2}) \dots f(x_n^{\epsilon_n})
+  \]
+  for nonempty words, while the empty word maps to the identity element in $G$. Since the spelling of reduced words is unique $\phi$ is well defined and trivially extends $f$. We will show that $\phi$ is a homomorphism. Let $w,u \in F$ and choose a possibly empty subword $v$ of $w$ such that $w=w'v$ and $u=v^{-1}u'$ where $w'$ concatenates with $u'$ to form a reduced word. We have that
+  \[
+    \phi(wu) = \phi(w'u') = \phi(w')\phi(u').
+  \]
+  On the other hand, we notice that $\phi(v)^{-1} = \phi(v^{-1})$ therefore,
+  \[
+    \phi(w)\phi(u) = \phi(w'v)\phi(v^{-1}u') = \phi(w')\phi(v)\phi(v^{-1})\phi(u') = \phi(w')\phi(u').
+  \]
+
+  % We will show that $\mathcal{F}$ is a free group with generator $[X]$. Let $G$ be a group and $f:[X] \rightarrow G$ be any function. Define $\phi: \mathcal{F} \rightarrow G$ by $\phi(g) = \phi(|x_1^{\epsilon_1}| \circ |x_2^{\epsilon_2}| \circ \dots \circ |x_n^{\epsilon_n}|) = f(|x_1^{\epsilon_1}|)f(|x_2^{\epsilon_2}|) \dots f(|x_n^{\epsilon_n}|)$. By the uniqueness of $g$'s factorisation from \ref{eq:fact} it is clear that $\phi$ is well defined and extends $f$. It remains to show that $\phi$ is a homomorphism; the uniqueness of $\phi$ follows from the fact that another homomorphism must agree with $\phi$ on $[X]$ and thus on the whole $\mathcal{F}$, since $[X]$ generates it.
+
+  % Suppose $g_1,g_2 \in \mathcal{F}$ and $w = \tilde{\zeta}(g_1)$ and $u = \tilde{\zeta}(g_2)$ where $w,u \in F$. Now we can write $w = w'v$ and $v^{-1}u'$ where $v,v^{-1}$ are a possibly empty subwords of $w,u$ respectively such that $w'u'$ is reduced. Thus $wu = w'u'$. If $g_1',h,g_2' \in \mathcal{F}$ such that $g_1'(1) = w'$, $g_2'(1) = u'$ and $h(1) = v$ we have that $g_1 \circ g_2 = g_1' \circ h \circ h^{-1} \circ g_2' = g_1' \circ g_2'$. Therefore
+  % \[
+  %   \phi(g_1 \circ g_2) = \phi(g_1' \circ g_2') = \phi(g_1') \phi(g_2').
+  % \]
+  % The second equality here is easy to see from the definition of $\phi$ i.e.\ factorising $\phi(g_1' \circ g_2')$ and multiplying the factors. On the other hand we have
+  % \[
+  %   \phi(g_1)\phi(g_2) = \phi(g_1') \phi(h) \phi(h^{-1}) \phi(g_2') = \phi(g_1') \phi(h \circ h^{-1}) \phi(g_2') = \phi(g_1')\phi(g_2').
+  % \]
+  
+  Hence $\phi$ is a homomorphism as required. To see that $\phi$ is unique, let $\psi:F \rightarrow G$ be a homomorphism that extends $X$. It follows that for each reduced word $F$ with the spelling  $x_1^{\epsilon_1}x_2^{\epsilon_2} \dots x_n^{\epsilon_n}$ that for all $j= 1, \dots, n$ we have $(\psi \circ i) (x_j) = f(x_j)$. Since $\psi$ is a homomorphism,
+  \begin{equation*}
+    \begin{split}
+      \psi(x_1^{\epsilon_1}x_2^{\epsilon_2} \dots x_n^{\epsilon_n}) &= (\psi \circ i)(x_1^{\epsilon_1})(\psi \circ i)(x_2^{\epsilon_2}) \dots (\psi \circ i)(x_n^{\epsilon_n}) \\
+      &= f(x_1^{\epsilon_1})f(x_2^{\epsilon_2}) \dots f(x_n^{\epsilon_n}) \\
+      &= \phi(x_1^{\epsilon_1}x_2^{\epsilon_2} \dots x_n^{\epsilon_n}) \\
+    \end{split}
+  \end{equation*}
+  Since such a unique homomorphism $\phi:F \rightarrow G$ exists for each group $G$ and function $f:X \rightarrow G$ we have that $F$ is free with basis $X$.
+\end{proof}
+
+We observe that since each set $S$ has a corresponding free group $F(S)$, the bijection $b:S \rightarrow T$ for another set $T$ of the same cardinality gives us that there exist $\phi$ and $\psi$ such that the following diagram must commute.
+\begin{equation*}
+  \begin{tikzcd}[ampersand replacement=\&, sep=huge]
+    F(S) \& S \arrow[r,hook] \arrow[l,hook]  \arrow[d,"b"] \& F(S) \arrow[d,dashrightarrow,"\phi"] \\
+    F(T) \arrow[u,dashrightarrow,"\psi"] \& T \arrow[r,hook] \arrow[l,hook] \arrow[u]\& F(T).
+  \end{tikzcd}
+\end{equation*}
+
+One thus has that $\psi(\phi(s)) = s$ for each $s \in S$ and $\phi(\psi(t)) = t $ for each $t \in T$. Since $F(S)$ and $F(T)$ are composed of reduced words on $S$ and $T$ respectively, it is can be shown that the homomorphisms $\phi$ and $\psi$ are in fact isomorphisms. In particular we can show that a free group is unique up to isomorphism given the cardinality of its generating set.
+
+\begin{definition}
+  If $X$ is a set of cardinality $n \in \mathbb{N}$, then we say that the free group generated by $X$ has \emph{rank} $n$.
+\end{definition}
+
+Now we have a powerful corollary of Theorem \ref{thm:exist} by which we can define provide a general definition of group presentations.
+
+\begin{corollary}
+  \label{cor:presentations-exist}
+Every group $G$ is a quotient of a free group.
+\end{corollary}
+
+\begin{proof}
+  Let $X = \{x_g \mid g \in G \}$ and suppose that $f:X \rightarrow G$ is the natural bijection $x_g \mapsto g$. By Theorem \ref{thm:exist} above, we have the existence of a free group $F$ with generator $X$. Now by definition of the free group, there exists a unique homomorphism $\phi:F \rightarrow G$ such that $\phi$ extends $f$ and since $f$ is surjective, $G = f(X) = \phi(F)$. By the isomorphism theorem we have our result $G = \phi(F) \cong F / \ker \phi$.
+\end{proof}
+
+\begin{definition}
+  Given $X$, suppose $\Delta$ is a family of words on $X$. We say that a group $G$ has \emph{generators} $X$ and \emph{relations} $\Delta$ if $G \cong F/R$ where $F$ is the free group generated by $X$ and considering $\Delta$ as a subset of the $F$, $R$ is the subgroup generated by $\Delta$. We denote $G = (X \mid R)$ and call this notation a \emph{presentation} of $G$.
+\end{definition}
+
+With this we have formally introduced the two main ideas that this project will be exploring: Free groups and Presentations. The \emph{Nielsen-Schreier Theorem} (Theorem \ref{thm:ns}), which we will study first, tells us that every subgroup of a free group is a free group itself. In this project, we will present a proof that is due to R.\ Baer and F.W.\ Levi that was presented in 1936 and considers the free group geometrically in a manner that we shall introduce in the following sections. The first proof for this theorem was presented in 1926 by Otto Schreier, who extended Jakob Nielsen's 1921 result which proved it for the finitely generated case, i.e.\ that every free group with a finite generating set has that all of its subgroups are free.
