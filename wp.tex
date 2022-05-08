@@ -100,5 +100,382 @@ For every Turing machine $T$, with alphabet $S$, there must be some words of $S$
 \begin{definition}
   Let $\Omega$ be the set of all positive words on $S = \{s_0,s_1, \dots, s_M \}$. We say that a subset $E \subseteq \Omega$ is \emph{recursive} if both $E$ and its complement $\Omega - E$ are recursively enumerable.
 \end{definition}
+
+Now with this formal background at our disposal, we can more concretely present the word problem that we introduced informally at the beginning of this section.
+
+\begin{definition}
+  \label{def:wp}
+  Let $G$ is a group with the presentation $(x_1,x_2, \dots, x_n \mid \Delta)$, and $\Omega$ is the set of all words on $\{x_1, \dots x_n\}$ (which we consider positive words on $X \cup X^{-1}$). Then, we say that $G$ has a \emph{solvable word problem} if the set
+  \begin{equation*}
+    \{\omega \in \Omega \mid \omega = 1 \text{ in } G \}
+  \end{equation*}
+  is recursive.
+\end{definition}
+
+If a group has a solvable word problem, it implies that for any word $\omega$ on the generators, there exist Turing machines $T$ and $T'$ that can be run simultaneously to tell us whether or not $\omega$ evaluates to $1$ in $G$, which is essentially identical to the intuitive form of problem that we presented in Section \ref{sec:wp}.
+
+In Section \ref{sec:wp} we also presented a way to associate words on a finite set of symbols with the natural numbers (lexicographically), in the case that our symbols are countable and can be enumerated, it is useful to define the following.
+\begin{definition}
+  If $s_1$ is a set of finite symbols and the words on $s_1$ can be indexed by $s_1^{n+1}$, then we say that $E$ is a recursively enumerable subset of $\mathbb{N}$ if there exists a Turing machine $T$ that has the symbols of $s_1$ in its alphabet and
+  \begin{equation*}
+    E = \{n \in \mathbb{N} \mid T \text{ computes } s_1^{n+1}\}.
+  \end{equation*}
+\end{definition}
+
+We then have the following theorem which will prove important when we investigate the word problem for groups.
+
+\begin{lemma}
+  \label{lem:turing-countable}
+  There exist countably many Turing machines.
+\end{lemma}
+
+\begin{proof}
+  The definition gives us that a Turing machine $T$ is a finite set of quadruples. We can assign a unique natural number to each Turing machine in the following manner; we start by assigning numbers to the symbols in the quadruples as follows:
+  \begin{align*}
+    R &\mapsto 0; \\
+    L &\mapsto 1; \\
+    q_0 \mapsto 2; \quad q_1 &\mapsto 4; \quad q_2 \mapsto 6; \dots \\
+    s_0 \mapsto 3; \quad s_1 &\mapsto 5; \quad s_2 \mapsto 7; \dots \\
+  \end{align*}
+  and it should be easy to see that each possible symbol of the Turing machine has a corresponding unique integer $e$ assigned to it. For Turing machine $T$, let $w(T)$ be the not necessarily unique juxtaposition of the quadruples that would then have length $4m$ for some $m \in \mathbb{N}$. It is easy to see that the word $w(T)$ is unique for the Turing machine $T$. If $p_i$ is the $i$'th prime number and $e_i$ is the natural number assigned to the $i$'th symbol in $w(T)$, we define the \emph{G\"odel number} by
+  \begin{equation*}
+    G(T) = \prod_{i=1}^{4m} p_i^{e_i}.
+  \end{equation*}
+  By the unique prime factorisation of natural numbers, it is clear that each Turing machine has a unique G\"odel number though since our choice of juxtaposing the quadruples was arbitrary, a G\"odel number doesn't correspond to a unique Turing machine. However this is enough to prove our claim that all the set of all Turing machines that may exist are in fact countable.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:natural}
+  There exists a recursively enumerable subset of $\mathbb{N}$ that is not recursive.
+\end{theorem}
+
+\begin{proof}
+  To prove our Theorem, we index Turing machines by $T_1,T_2, \dots$ which we can do by Lemma and consider the set
+  \begin{equation*}
+    E = \{ n \in \mathbb{N} \mid T_n \text{ computes }s_1^{n+1} \}.
+  \end{equation*}
+  We will show that $E$ is recursively enumerable but not recursive. Since Turing machine $T_n$, computes $s_1^{n+1}$, the following sequence of basic moves terminates
+  \begin{equation*}
+    q_1 s_1^{n+1} \mapsto \alpha_{n+1,2} \mapsto \alpha_{n+1,3} \mapsto \dots \mapsto \alpha_{n+1,m}
+  \end{equation*}
+  >?
+\end{proof}
+
+
 \section{The Markov-Post Theorem}
+The question at hand is whether or not a group, given its presentation, has a solvable word problem.
+> History etc.
+We will need the Markov Post Theorem in order to prove the insolubility of the word problem for some group and its presentation. The Markov-Theorem proves this result for semigroups which we will proceed to introduce.
+
+\subsection{Semigroups}
+\label{sec:mpt:semi}
+
+\begin{definition}
+  A semigroup $(G,*)$, is a set $G$ equipped with a binary operation $*$, that is associative.
+\end{definition}
+
+Semigroups are more general than groups, not necessarily requiring an identity element and thereby no condition on inverses either. As with groups we may omit specifying the symbol representing the binary operation and denote the ``multiplication'' as we do in groups.
+Recall that homomorphisms on groups are well defined without any reference to the identity element of the group. Thus we can use the same definition on semigroups as well. This is all we will need to define \emph{free semigroups}.
+
+\begin{definition}
+  If $X$ is a subset of a  of a semigroup $\Sigma$, and for every semigroup $S$ and function $f:X \rightarrow S$ there exists a unique homomorphism $\phi: \Sigma \rightarrow S$ that extends $f$, then we say that $\Sigma$ is a \emph{free semigroup}.
+\end{definition}
+
+For the sets and functions in the above definition, the following diagram commutes:
+\begin{equation}
+  \begin{tikzcd}[ampersand replacement=\&, sep=huge]
+    \Sigma \arrow[dr,dashrightarrow,"\phi"] \\
+    X \arrow[u,hook] \arrow[r,"f"] \& S.
+  \end{tikzcd}
+\end{equation}
+
+\begin{definition}
+  A \emph{congruence} on a semigroup $S$ is an equivalence relation denoted by $\equiv$ on $S$ such that
+  \begin{equation*}
+    a \equiv a' \quad\text{and}\quad b \equiv b' \qquad\text{imply that}\qquad ab \equiv a'b'.
+  \end{equation*}
+  The \emph{quotient semigroup} for a congruence $\equiv$ is the set of all equivalence classes, denoted by $S/\equiv$, along with the operation
+  \begin{equation*}
+    [a][b] := [ab].
+  \end{equation*}
+\end{definition}
+
+An easy example of a semigroup congruence is induced by a homomorphism between semigroups $\phi:S \rightarrow T$.
+
+\begin{example}
+  If $S,T$ are semigroups and $\phi:S \rightarrow T$ is a homomorphism, there is a natural congruence on $S$, defined by $\alpha \equiv \beta$ if and only if $\phi(\alpha) = \phi(\beta)$ in $T$. By definition, if $\alpha' \equiv \beta'$, we have
+  \begin{equation*}
+    \phi(\alpha\beta) = \phi(\alpha)\phi(\beta) = \phi(\alpha')\phi(\beta') = \phi(\alpha'\beta'),
+  \end{equation*}
+  and hence $\alpha\beta \equiv \alpha'\beta'$ as required. If we call this congruence $\ker \phi$, we have that $S/\ker \phi \cong \phi(S)$ as a semigroup. This is easy to see after noting that $[a] \in S/\ker \phi$ consists of all elements $x \in S$ such that $\phi(x) = \phi(a)$.
+\end{example}
+
+Since a relation $\sim$ on a set $S$ is nothing but a subset on $S \times S$ (where an element $(a,b)$ belongs to the subset if and only if $a \sim b$), we have this for congruences as well. For any subset $E \subseteq S \times S$, we can define the congruence generated by $E$ as the smallest congruences that has $E$ as it's subset. This is well defined because the whole $S \times S$, considered as a subset of itself, is a congruence. With this we may define the following.
+
+\begin{definition}
+  Let $\Sigma$ be a free semigroup with basis $X$ and suppose $\{w_i = u_i \mid i \in I \}$ is a family of equations where $w_i,u_i \in \Sigma$. If $\equiv$ be the congruence generated by the subset $\{(w_i,u_i) \mid i \in I \}$ of $\Sigma \times \Sigma$, then we say that the \emph{presentation} of the quotient semigroup $\Sigma/\equiv$ is:
+  \begin{equation*}
+    (X \mid w_i = u_i \text{ for all } i \in I).
+  \end{equation*}
+\end{definition}
+
+\subsection{The Word Problem for Semigroups}
+\label{sec:mpt:wps}
+
+In this subsection, we will work towards the Markov Post Theorem >ref which will show us that there is a semigroup that has an unsolvable word problem, in a similar way to what we introduced formally in Definition \ref{def:wp}. Here is a precise definition of what we want to show for some semigroup.
+
+\begin{definition}
+  Let $\Gamma$ be a semigroup with generators $X = \{x_1, \dots, x_n\}$ and if $\Omega$ is the set of all positive words on $X$, we say that $\Gamma$ has an unsolvable word problem if there is a word $\omega_0 \in \Omega$ such that $\{\omega \in \Omega \mid \omega = \omega_0 \text{ in } \Gamma\}$ is not recursive.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:semi-re}
+  For a finitely presented group with the following presentation
+  \begin{equation*}
+    G = (x_1, x_2, \dots x_n \mid r_1, \dots, r_m), 
+  \end{equation*}
+  and the set $\Omega$ comprised of all words on $\{x_1, \dots, x_n \}$, we have that the set $E = \{\omega \in \Omega \mid \omega = 1 \text{ in } G\}$ is recursively enumerable.
+\end{theorem}
+
+\begin{proof}
+  We can list the words in $\Omega$ in Lexographic order and consequently index them against non-negative integers as we did towards the end of Section \ref{sec:wp}. I.e.\ we can write the elements of $\Omega$ as $\omega_0, \omega_1, \omega_1, \dots$.
+  
+  Now suppose for $k \in \{1,2,\dots,n\}$ that $r_{m+k}$ is the word $x_k x_k^{-1}$ . Then, as before, we can lexographically index all words on $\{ r_1, \dots, r_{m+n}\}$ by the natural numbers and write them as $\rho_1,\rho_2, \dots$ for all the countably many words. With this, we have that
+  \begin{equation*}
+    E = \{\omega_k\rho_l\omega_k^{-1} \mid k,l \in \mathbb{N}_0\}.
+  \end{equation*}
+
+  Thus we can order all the countably many elements of $E$ ensuring that, we eventually hit all of them as in \ref{eq:enumerate-e}.
+  \begin{equation}
+    \label{eq:enumerate-e}
+    \begin{tikzcd}
+%%      T_0 & T_1 & T_2 & T_3 \\
+      \omega_0\rho_0\omega_0^{-1} \arrow[d] & \omega_0\rho_1\omega_0^{-1} \arrow[r] & \omega_0\rho_2\omega_0^{-1} \arrow[dl] & \omega_0\rho_3\omega_0^{-1}\arrow[r] & \dots \\
+      \omega_1\rho_0\omega_1^{-1} \arrow[ur] & \omega_1\rho_1\omega_1^{-1} \arrow[dl]  & \omega_1\rho_2\omega_1^{-1} \arrow[ur]. \\
+      \omega_2\rho_0\omega_2^{-1} \arrow[d]& \omega_2\rho_1\omega_2^{-1} \arrow[ur] \\
+      \omega_3\rho_0\omega_3^{-1} \arrow[ur]\\
+    \end{tikzcd}
+  \end{equation}
+  Actually, this is enough to tell us that there exists a Turing machine $T^*$ that computes $E$. > need citation
+\end{proof}
+
+Thus our question investigating whether the set of words $E$ on the generators of $G$ is recursive, is half solved; we know that $E$ is recursively enumerable and it remains to ask whether $E$'s complement is recursively enumerable as well.
+
+\begin{definition}
+  \label{associated-semigroup}
+  Let $T$ be a Turing machine that has stopping state quadruples with $s$-letters $\{s_0,s_1,\dots,s_M\}$ and $q$-letters $\{q_0,q_2,\dots,q_N\}$ where $q_0$ is understood to be the Turing machine's stopping state. If $h$ and $q$ are two more symbols, we define the $\Gamma(T)$, the \emph{associated semigroup} of $T$ to be the semigroup with presentation
+  \begin{equation*}
+    \Gamma(T) = (q,h,s_0,s_1,s_2, \dots, s_M, q_0,q_2, \dots, q_N \mid R(T))
+  \end{equation*}
+  where we will $R(T)$ is the set of relations with the following elements:
+  \begin{itemize}
+  \item  $q_is_j = q_ls_k$ if  $q_is_js_kq_l$ is a quadruple in $T$;
+  \item $q_is_js_\beta = s_jq_ls_\beta$ if $q_is_jRq_l$ is a quadruple in $T$ and $\beta \in \{1,2,\dots M\}$;
+  \item $q_is_jh = s_jq_ls_0h$ if $q_is_jRq_l$ is a quadruple in $T$;
+  \item $s_\beta s_jq_i = q_ls_\beta s_j$ if $q_is_jLq_l$ is a quadruple in $T$ and $\beta \in \{1,2,\dots M\}$;
+  \item $hq_is_j = h q_ls_0s_j$ if $q_is_jRq_l$ is a quadruple in $T$;
+  \item $q_0s_\beta = q_0$ if $\beta \in \{1,2,\dots M\}$;
+  \item $s_\beta q_0 h = q_0h$ if $\beta \in \{1,2,\dots M\}$;
+  \item $hq_0h = q$.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}
+  A word in the associated semigroup is \emph{$h$-special} if it has the form $h\alpha h$ for some  instantaneous description $\alpha$.
+\end{definition}
+
+> need spelling congruence and elementary operations.
+
+\begin{lemma}
+  \label{lem:gamma-prop}
+  If $T$ is aturring machine that has stopping state $q_0$ and associated semigroup $\Gamma(T)$, with presentation
+  \begin{equation*}
+    \Gamma(T) = (q,h,s_0,s_1,s_2, \dots, s_M, q_0,q_2, \dots, q_N \mid R(T)), 
+  \end{equation*}
+  we have the following
+  \begin{enumerate}
+  \item Let $\omega$ and $\omega'$ be words on $\{s_0,s_1,s_2, \dots, s_M, q_0,q_2\}$ (> possible error? includes q,h?) where neither $\omega$ nor $\omega'$ have the spelling $q$. Then if $\omega \rightarrow \omega'$ is an elementary operation then $\omega$ is $h$-special if and only if $\omega'$ is.
+  \item If $\omega = h\alpha h$ is $h$-special, $\omega'$ doesn't spell $q$ and $\omega \rightarrow \omega'$ is an elementary operation of one of the first five types of relations in Definition \ref{associated-semigroup}, then $\omega' \equiv h\beta h$  where either $\alpha \mapsto \beta$ or $\beta \mapsto \alpha$ is a basic move of $T$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  \begin{enumerate}
+  \item The only relation that creates or destroys $h$ is the last relation listed in Definition \ref{associated-semigroup}. Consequently, since we don't allow either word to spell $q$, the elementary move can't be the last one and the desired result follows.
+  \item We know from the above that $\omega'$ must be $h$-special and we assume it can be written $h\beta h$ for some instantaneous description $\beta$. The elementary operation $\omega \rightarrow \omega'$ substitutes a subword of $\omega$ with based on the one of the first five relations in Definition \ref{associated-semigroup}. This elementary move corresponds to a quadruple of the Turing machine. Since the elementary operation can occur in either direction but the basic moves governed by the quadruples only move in one direction we either have $\alpha \mapsto \beta$ \emph{or} $\beta \mapsto \alpha$. > need to explain why 6/7 doesn't work and the link between elem op and basic move.
+  \end{enumerate}
+\end{proof}
+
+\begin{lemma}
+  \label{lem:semi-turing}
+  Let $T$ be a Turing machine with stopping state $q_0$, let $\Omega$ be the set of all positive words on the alphabet of $T$, and let $E = e(T)$. If $\omega \in \Omega$, then $\omega \in E$ if and only if $hq_1\omega h = q$ in the associated subgroup $\Gamma(T)$.
+\end{lemma}
+
+\begin{proof}
+  Suppose $\omega \in E$, or equivalently $T$ computes $\omega$. Thus we must have a finite sequence of basic moves in $T$ that take $q_1\omega$ to a terminal state. In other words there exist instantaneous descriptions
+  \begin{equation}
+    \label{eq:bmoves}
+    q_1\omega \equiv \alpha_1 \mapsto \alpha_2 \mapsto \dots \mapsto \alpha_t
+  \end{equation}
+  where the instantaneous description $\alpha_t$ contains the terminal state symbol $q_0$.
+
+  Applying the relations of Definition \ref{associated-semigroup} on $h\alpha_1 h$, considered an element of the associated semigroup, we use the relations corresponding to the basic moves in \ref{eq:bmoves} to have $hq_1\omega h = h \alpha_t h$. However the last three relations of $\Gamma(T)$ allow us to further reduce this to $q$, proving the necessary case of the theorem.
+
+  Conversely,suppose that the element spelled $hq_1\omega h$ is equal to $q$ in the semigroup $\Gamma(T)$. By our discussion introducing elementary operations >fill, we have that there exist words $\omega_2, \omega_3,\dots, \omega_t$ on the set $\{ h,s_0,s_1,s_2, \dots, s_M, q_0,q_2, \dots, q_N \}$ such that there exist elementary operation as below
+  \begin{equation*}
+    hq_1 \omega h \equiv \omega_1 \rightarrow \omega_2 \rightarrow \dots \rightarrow \omega_t \equiv h q_0 h \rightarrow q.
+  \end{equation*}
+
+  Lemma \ref{lem:gamma-prop}(1) tells us that each $\omega_i$ is $h$-special and so for all $i$ we can write $\omega_i \equiv h \alpha_i h$ where $\alpha_i$ is an instantaneous description. If we can show for each $i$ that $\alpha_i \mapsto \alpha_{i+1}$ is a basic move in $T$, then $T$ computes $\omega$ and we are done.
+
+  However this is not automatic, like the key step in the proof of the necessary condition was; this is for the same reason that we required \emph{either} $\alpha \mapsto \beta$ or $\beta \mapsto \alpha$ in Lemma \ref{lem:gamma-prop} (2); basic moves are not an symmetric relation while equality in the semigroup is. Thus we need to explicitly prove that $\alpha_i \mapsto \alpha_{i+1}$ for each $1 \geq i <t$ and \emph{not} $\alpha_{i+1} \mapsto \alpha_i$, which is the necessary alternative by Lemma \ref{lem:gamma-prop} (2). We will proceed by induction on $t \geq 2$.
+
+  For $t = 2$ we have that the following is an elementary semigroup operation
+  \begin{equation*}
+    hq_1 \omega h  \rightarrow  h q_0 h,
+  \end{equation*}
+  and by Lemma \ref{lem:gamma-prop} (2), either $q_1 \omega \mapsto q_0$ or $q_0 \mapsto q_1 \omega$. However, the latter is not possible since $q_0$ is the terminal description and so the basic move must be the former, which is what we desire for the base case $t = 2$.
+
+  In fact the argument for the base case shows that for all $t$, if
+  \begin{equation*}
+    hq_1 \omega h \equiv h\alpha_1h \rightarrow h\alpha_2 h \rightarrow \dots \rightarrow h\alpha_t h \equiv h q_0 h \rightarrow q,
+  \end{equation*}
+  Then $\alpha_{t-1} \mapsto \alpha_t$ must always be a basic move. Thus in the chain of basic moves between adjacent elements $\alpha_1, \alpha_2, \dots, \alpha_{t-1}, \alpha_t$, the last arrow points to the ``right''. If not all arrows point to the right, there is some $i$ such that $\alpha_i \mapsto \alpha_{i+1}$ \emph{and} $\alpha_i \mapsto \alpha_{i-1}$. We must have then that $\alpha_{i-1}$ and $\alpha_{i+1}$ are the same instantaneous description since Turing machines are not ambiguous. It follows that the words $\omega_{i-1}$ and $\omega_{i+1}$ have the same spelling and two words, $\omega_i and \omega_{i+1}$ can be deleted from the chain of semigroup elementary operations, preserving the rest. Consequently our chain will have fewer than $t$ words, but we have assumed by the inductive step that the desired result is true in this case.
+\end{proof}
+
+\begin{lemma}
+  Let $\Omega$ be the set of all positive words on a set of symbols $S$. Suppose $\Omega' \subseteq \Omega$. If $E \subseteq \Omega$ is recursive then $E \cap \Omega'$ is a recursive subset of $\Omega'$
+\end{lemma}
+
+\begin{theorem}[Markov-Post]
+  \begin{enumerate}
+  \item There is a finitely presented semigroup
+    \begin{equation*}
+      \gamma = (q,h,s_0,s_1,s_2, \dots, s_M, q_0,q_2, \dots, q_N \mid R)
+    \end{equation*}
+    that has an unsolvable word problem.
+  \item There is no decision process which determines, for an arbitrary $h$-special word $h\alpha h$ whether $h\alpha h = q$ in $\gamma$.
+  \end{enumerate}
+\end{theorem}
+
+
+\begin{proof}
+  For any Turing machine $T$ with stopping state $q_0$, we may suppose that its alphabet is $A = \{s_0,s_1,s_2, \dots, s_M \}$ and its $q$-letters are $B = \{q_0,q_1,q_2, \dots q_N\}$. We let $\Omega$ be the set of positive words on $A$. Introducing the new symbols $q$ and $h$ of the associated semigroup, we let $\bar{\Omega}$ to be the set of positive letters on $A \cup B \cup \{ q,h \}$. We then make the following definitions for this Turing machine:
+  \begin{align*}
+    E &:= e(T) = \{\omega \in \Omega \mid T \text{ computes } \omega\}; \\
+    \bar{E} &:= \{\bar{\omega} \in \bar{\Omega} \mid  \bar{\omega} = q \text{ in } \Gamma(T) \}; \\
+    \Omega_1 &:= \{hq_1\omega h \mid \omega \in \Omega\}; \\
+    E_1 &:= \{hq_1\omega h \mid \omega \in E \}.
+  \end{align*}
+
+  Our aim is to show that there exists some $T^*$ such that the consequent $\bar{E}$ is not recursive in $\bar{\Omega}$. If we can find this, then the let $\gamma$ be the associated semigroup $\Gamma(T^*)$. This semigroup then has an unsolvable word problem by definition (for words evaluating to $q$ in the semigroup).
+
+  For this, we note that by Lemma \ref{lem:semi-turing}, all elements in $\bar{E}$ of the form $hq_1\omega h$ have that $\omega \in E$ and the converse is true as well. Thus we have that
+  \begin{equation*}
+    E_1 = \bar{E} \cap \Omega_1
+  \end{equation*}
+
+  If $\bar{E}$ is recursive, then we claim that $E_1$ is arecursive as a subest of $\Omega_1$. Note that $\bar{E} \cap \Omega_1$ is recursively enumerable; so there is a Turing machine $T$ such that $e(T) = \bar{E}$. Now we can run a machine $T'$ that strips the $hq_1 \_ h$ from elements of $\Omega$ and then runs $T$ on the resultant word and $e(T') = E_1$. On the other hand, we note that $\Omega_1 - E_1 = \Omega_1 \cap (\bar{\Omega} - \bar{E})$. By hypothesis we know there exists a Turing machine that enumerates $\bar{\Omega} - \bar{E}$ and as before we can create a Turing machine that enumerates $\Omega_1 - E_1$.
+  
+  One can also see that $E_1$ is $E$ identified inside $\Omega_1 \subseteq \bar{\Omega}$, we have that it is recusive in $\Omega_1$ exactly when $E$ is recursive in $\Omega$.
+
+  Putting it together, we have that if $\bar{E}$ is recursive in $\bar{\Omega}$, then $E$ is recursive in $\Omega$. Thus if we can find a Turing machine that enumerates a set that is not recursive, we are done. We have however done this in already in Theorem \ref{thm:natural}. Let $T^*$ be the Turing machine of this theorem that has the stopping state of $q_0$. Then $\gamma = \Gamma(T^*)$ has an unsolvable word problem.
+
+  For the second part, we suppose
+  \begin{equation*}
+    \bar{S} = \{h\text{-special words }h\alpha h \mid h\alpha h = q. \text{ in } \Gamma(T^*) \}
+  \end{equation*}
+  Then with similar reasoning that we used for the first part, we can argue that since $\bar{S} \cap \Omega_1 = E_1$, that $\bar{S}$ cannot be a recursive subset of $\bar{\Omega}$.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:markov-post}
+  \begin{enumerate}
+  \item There exists a finitely presented semigroup
+    \begin{equation*}
+      \Gamma = \{q,q_0, \dots, q_N,s_0, \dots, s_M \mid F_iq_iG_i = H_iq_{i_2}K_i,i \in I\}
+    \end{equation*}
+    that has an unsolvable word problem, where $F_i,G_i,H_i,K_i$ are possibly empty positive $s$-words and $q_{i_1}$ and $q_{i_2}$ are $q$-letters.
+  \item There is nod decision process that whether $X q_{i_j} Y = q$ in $\Gamma$, where $X$ and $Y$ are positive possibly empty $s$-words and $q_i$ is an arbitrary $q$-letter.
+  \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+  For the first part we can simply take $\gamma$ from the previous theorem and let the $s$-letters be indexed such that $h$ is included among them (i.e.\ we add an extra $s$-letter: $s_M = h$). The relations written in this manner then have the desired form (recall Definition \ref{associated-semigroup}).
+
+  Let $\Omega_2$ be the set of positive words on the generators of $\Gamma$ from the first part and suppose that
+  \begin{equation*}
+    \bar{\Lambda} = \{Xq_{i_j}Y  \mid X,Y \text{ are positive }s\text{-words and } Xq_{i_j}Y = q \text{ in } \Gamma\}.
+  \end{equation*}
+  and 
+  \begin{gather*}
+    \bar{S_2} = \{s_M\alpha s_M \mid \alpha \equiv \sigma q_{i_j} \tau \text{ where } \sigma,\tau \text{ are positive words on } s_0,\dots,s_{M-1} \\
+    \text{ and } s_M\alpha s_M = q \text{ in } \Gamma\}
+  \end{gather*}
+  $\bar{S_2}$ is exactly $\bar{S}$ from the Theorem with the $h$'s relabeled, so we know that it is not recursive. As in the proof of the theorem, since $\bar{S_2} = \bar{\Lambda} \cap \Omega_2$, we have that $\bar{\Lambda}$ is not recursive.
+\end{proof}
+
 \section{The Novikov-Boone-Britton Theorem}
+
+
+We introduce some notation. If $X \equiv s_{\beta_1}^{e_1} \dots s_{\beta_m}^{e_m}$ is any word on $s$-letters, then we let $X^{\#}$ be the word spelled $s_{\beta_1}^{-e_1} \dots s_{\beta_m}^{-e_m}$.
+
+\begin{definition}
+  For a Turing machine $T$, we define \emph{Boone's Group} $\mathcal{B}(T)$ as the group with generators:
+  \begin{equation*}
+    q,q_0, \dots, q_N, s_0, \dots, s_M, r_i, i \in I,x,t,k;
+  \end{equation*}
+  and relations of the following types:
+  \begin{align*}
+    xs_\beta &= s_\beta x^2, \\
+    r_is_\beta &= s_\beta xr_ix, \\
+    r_i^{-1}F_i^{\#}q_{i_1}G_ir_is_\beta &= H_i^{\#}q_{i_2}K_i, \\
+    tr_i &= r_it, \\
+    tx &= xt, \\
+    kr_i &= r_ik, \\
+    kx &= xk, \\
+    k(q^{-1}tq) &= (q^{-1}tq)k.    
+  \end{align*}
+\end{definition}
+
+Now Boone's Lemma.
+
+\begin{definition}
+  We say that a word is \emph{special} if it is spelled $X^{\#}q_jY$ if $X,Y$ are positive $s$-words and $q_j \in \{q,q_0,\dots,q_N\}$.
+\end{definition}
+
+For, $s$-words $X,Y$ and $q_j$ as in the above definition define the following operation as well:
+\begin{equation*}
+  (Xq_jY)^* \equiv X^{\#}q_jY.
+\end{equation*}
+
+\begin{lemma}[Boone]
+  Let $T$ be a Turing machine with stopping state $q_0$ and associated semigroup $\Gamma$, that has been rewritten as in Corollary \ref{cor:markov-post}. If $\Sigma$ is a special word then we have that
+  \begin{equation*}
+    k(\Sigma^{-1}t\Sigma) = (\Sigma^{-1}t \Sigma)k
+  \end{equation*}
+  in $\mathcal{B}(T)$ if and only if $\Sigma^* = q$ in $\Gamma$.
+\end{lemma}
+
+\begin{theorem}[Novikov-Boone-Britton]
+  There exists a finitely presented group with an unsolvable word problem.
+\end{theorem}
+
+\begin{proof}
+  Let $\mathcal{B}$ be the Boone group for the Turing machine $T^*$ that we found for the Markov-Post Theorem. By the second part of Corollary \ref{cor:markov-post} there is no decision process that tells us whether $\Sigma^* = q$ in $\Gamma(T^*)$. Then by Boone's Lemma, we can't find a Turing machine that tells us whether
+  \begin{equation*}
+    k(\Sigma^{-1}t\Sigma) = (\Sigma^{-1}t \Sigma)k
+  \end{equation*}
+  in $\mathcal{B}$ and consequently whether
+  \begin{equation*}
+    k(\Sigma^{-1}t\Sigma)k^{-1}\Sigma^{-1}t^{-1}\Sigma = 1.
+  \end{equation*}
+  in $\mathcal{B}$.
+\end{proof}
+
+> comment on reasoning
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
