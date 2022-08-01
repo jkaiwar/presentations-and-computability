@@ -1,4 +1,8 @@
-In this project we will explore two important theorems loosely connected to the presentation of groups.
+In this project we will explore two important Theorems loosely connected to the presentation of groups. We start by introducing \emph{free groups} which will lead allow us to formally define \emph{group presentations}, which the reader might be familiary with from other studies of Group Theory not dealing with free groups. The first Theorem that we will deal with is the Nielsen-Schreier (Theorem \ref{thm:ns}) which gives us that any subset of the free group is also a free group. To show this, we present some ideas from Algebraic Topology that are adapted to our needs. We find that certain topological structures called \emph{simplical complexes} can be associated with free groups, and then our study of these complexes and their relationship with group theory will be used to fully prove the Nielsen-Schreier Theorem in Chapter \ref{chap:ns}.
+
+In Chapter \ref{chap:wp} we will deal with the Word problem, that arises from our means of writing groups in the form of a presentation. The question that arises from this is whether an arbitrary presentation is intelligible to a computer, or a deterministic process that can study the presentation and be able to identify whether or not an element of the presentation is equal to the identity element in the group. This problem was posited by Max Dehn and Axel Thue in 1911 and 1914 respectively. Over then next forty years, many results were proved that established computability theory as a field of mathematics and the question was finally answered by the Novikov-Boone-Britton Theorem which showed that presentations (even those that can be written finitely) can not be understood by computers in the way we have mentioned. We will study this reult in section \ref{sec:mpt:wps}.
+
+Most of my study and the organisation of results presented in this project I owe to the last chapters of J.J. Rotman's \emph{Introduction to the Theory of Groups} \cite{rotman1999introduction}.
 
 \section{Free Groups}
 \label{sec:sc:fg}
@@ -126,3 +130,7 @@ Every group $G$ is a quotient of a free group.
 \end{definition}
 
 With this we have formally introduced the two main ideas that this project will be exploring: Free groups and Presentations. The \emph{Nielsen-Schreier Theorem} (Theorem \ref{thm:ns}), which we will study first, tells us that every subgroup of a free group is a free group itself. In this project, we will present a proof that is due to R.\ Baer and F.W.\ Levi that was presented in 1936 and considers the free group geometrically in a manner that we shall introduce in the following sections. The first proof for this theorem was presented in 1926 by Otto Schreier, who extended Jakob Nielsen's 1921 result which proved it for the finitely generated case, i.e.\ that every free group with a finite generating set has that all of its subgroups are free.
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
